@@ -28,7 +28,4 @@ public class ViewFinder {
         return mActivity != null ? mActivity.findViewById(viewId):mView.findViewById(viewId);
     }
 
-    public void setOnClick(int viewId){
-
-    }
 }

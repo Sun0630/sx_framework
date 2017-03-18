@@ -2,6 +2,7 @@ package com.sx.baselibrary.ioc;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -95,14 +96,60 @@ public class ViewUtils {
                 //4,执行findViewById找到这个view
                 for (int viewId : viewIds) {
                     View view = finder.findViewById(viewId);
+                    //添加检测网络
+                    boolean isCheckNet = method.getAnnotation(CheckNet.class) != null;
 
+                    if (view != null) {
+                        //5,setOnClickListener
+                        view.setOnClickListener(new DeclaredOnClickListener(method,object,isCheckNet));
+                    }
                 }
-
-                //5,setOnClickListener
-
-                //6,反射执行方法
-
             }
         }
     }
+
+    private static class DeclaredOnClickListener implements View.OnClickListener{
+
+        private Method mMethod;
+        private Object mObject;
+        private boolean mIsCheckNet;
+
+        public DeclaredOnClickListener(Method method, Object object,boolean isCheckNet) {
+
+            mMethod = method;
+            mObject = object;
+            mIsCheckNet = isCheckNet;
+        }
+
+        @Override
+        public void onClick(View v) {
+            //点击执行到这里
+            if (mIsCheckNet){
+                //需要检测网络
+                //判断网络是否可用
+                if (!NetworkUtils.isAvailable(v.getContext())){
+                    Toast.makeText(v.getContext(), "网络不可用哟~", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+
+            try {
+                //设置权限都可访问
+                mMethod.setAccessible(true);
+                //6,反射执行方法
+                mMethod.invoke(mObject,v);
+            } catch (Exception e) {
+                e.printStackTrace();
+                //处理没有传View的可能性
+                try {
+                    mMethod.invoke(mObject,null);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+    }
+
+
 }

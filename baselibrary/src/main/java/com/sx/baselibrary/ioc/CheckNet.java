@@ -6,12 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Author Sunxin
- * @Date 2017/3/17 17:37
- * @Description 事件的注解
+ * @Author sunxin
+ * @Date 2017/3/18 21:46
+ * @Description 添加检测网络注解
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface OnClick {
-    int[] value();
+public @interface CheckNet {
+
 }
