@@ -13,6 +13,7 @@ import com.sx.baselibrary.ioc.ViewUtils;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String JSON_CONTENT = "{'name':sunxin,'age':20}";
     @ViewById(R.id.tv_text)
     private TextView mTextView;
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.tv_text)
     public void clickEvent(View view){
         Toast.makeText(this, "点击事件发生了", Toast.LENGTH_SHORT).show();
+
     }
 
     @OnClick(R.id.iv_test)
