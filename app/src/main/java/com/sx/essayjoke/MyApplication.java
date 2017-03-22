@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
+import com.sx.baselibrary.ExceptionCrashHandler;
 
 /**
  * @Author Sunxin
@@ -17,7 +18,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化全局处理异常类
         initLogger();
+        ExceptionCrashHandler.getInstance().init(this);
     }
 
     /**

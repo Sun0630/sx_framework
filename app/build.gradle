@@ -26,6 +26,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.orhanobut:logger:1.15'
     compile project(':baselibrary')
     compile project(':framelibrary')
 }
