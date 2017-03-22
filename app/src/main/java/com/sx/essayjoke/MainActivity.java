@@ -1,8 +1,8 @@
 package com.sx.essayjoke;
 
-import com.sx.baselibrary.base.BaseActivity;
+import com.sx.framelibrary.BaseSkinActivity;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void setContentView() {
