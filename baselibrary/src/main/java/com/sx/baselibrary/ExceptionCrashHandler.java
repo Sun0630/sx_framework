@@ -57,11 +57,8 @@ public class ExceptionCrashHandler implements Thread.UncaughtExceptionHandler {
         //拿到异常信息，写到本地文件，包括异常信息，机型信息，当前版本等
 
         //1,异常信息
-
         //2,应用信息，包名  版本号
-
         //3,手机机型信息
-
         //4,保存当前文件，当应用再次启动的时候再去上传。   上传文件不能在这里处理
 
         String crashFileName = saveInfo2SD(e);

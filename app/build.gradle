@@ -29,4 +29,6 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     compile project(':baselibrary')
     compile project(':framelibrary')
+    /*阿里热修复框架*/
+    compile 'com.alipay.euler:andfix:0.5.0@aar'
 }

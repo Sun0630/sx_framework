@@ -1,7 +1,10 @@
 package com.sx.essayjoke;
 
 import android.app.Application;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
+import com.alipay.euler.andfix.patch.PatchManager;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.sx.baselibrary.ExceptionCrashHandler;
@@ -14,6 +17,7 @@ import com.sx.baselibrary.ExceptionCrashHandler;
 
 public class MyApplication extends Application {
     private static final String YOUR_TAG = "EssayJoke";
+    public static PatchManager mPatchManager;
 
     @Override
     public void onCreate() {
@@ -21,6 +25,31 @@ public class MyApplication extends Application {
         //初始化全局处理异常类
         initLogger();
         ExceptionCrashHandler.getInstance().init(this);
+        initAndFix();//初始化阿里热修复andfix
+    }
+
+
+    private void initAndFix() {
+        mPatchManager = new PatchManager(this);
+        String appVersion = getAppVersicon();
+        mPatchManager.init(appVersion);
+        mPatchManager.loadPatch();
+    }
+
+    /**
+     * 获取当前应用的版本号
+     * @return
+     */
+    private String getAppVersicon() {
+        PackageInfo packageInfo;
+        String versionName = null;
+        try {
+            packageInfo = getPackageManager().getPackageInfo(this.getPackageName(), PackageManager.GET_ACTIVITIES);
+            versionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
     }
 
     /**
