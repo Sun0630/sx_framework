@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.sx.baselibrary.ExceptionCrashHandler;
+import com.sx.baselibrary.fix.FixDexManager;
 import com.sx.framelibrary.BaseSkinActivity;
 
 import java.io.File;
@@ -34,9 +35,33 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initData() {
+
+        //自定义热修复
+        fixDexBug();
+
+        //阿里热修复
+//        andFix();
+    }
+
+    /**
+     * 自定义热修复
+     */
+    private void fixDexBug() {
+        File fixFile = new File(Environment.getExternalStorageDirectory(), "fix.dex");
+        if (fixFile.exists()){
+            FixDexManager fixDexManager = new FixDexManager(this);
+            try {
+                fixDexManager.fixDexBug(fixFile.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void andFix() {
         //下次进入应用获取到这个文件
         File crashFile = ExceptionCrashHandler.getInstance().getCrashFile();
-        /*if (crashFile.exists()){
+       /* if (crashFile.exists()){
             //如果文件存在，上传服务器 。。。
             Logger.d("上传到服务器");
             //读取出来

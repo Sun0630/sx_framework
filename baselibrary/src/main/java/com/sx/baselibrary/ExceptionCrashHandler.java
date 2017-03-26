@@ -50,6 +50,11 @@ public class ExceptionCrashHandler implements Thread.UncaughtExceptionHandler {
         mDefaultExceptionHandler = Thread.currentThread().getDefaultUncaughtExceptionHandler();
     }
 
+    /**
+     * 当有异常的时候会回调此方法
+     * @param t
+     * @param e
+     */
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         //全局异常
