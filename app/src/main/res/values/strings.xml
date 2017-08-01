@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">EssayJoke</string>
+
+    <string name="ss_share_hint">期待你的神评论</string>
+
+    <string name="comment_dialog_send">发送</string>
+    <string name="comment_dialog_share_label">分享到：</string>
 </resources>

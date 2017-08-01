@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.sx.baselibrary.ExceptionCrashHandler;
+import com.sx.baselibrary.dialog.AlertDialog;
 import com.sx.baselibrary.fix.FixDexManager;
 import com.sx.framelibrary.BaseSkinActivity;
 
@@ -25,12 +26,7 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initView() {
-        findViewById(R.id.tv_text).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, 2 / 1 + "测试", Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
 
     @Override
@@ -48,7 +44,7 @@ public class MainActivity extends BaseSkinActivity {
      */
     private void fixDexBug() {
         File fixFile = new File(Environment.getExternalStorageDirectory(), "fix.dex");
-        if (fixFile.exists()){
+        if (fixFile.exists()) {
             FixDexManager fixDexManager = new FixDexManager(this);
             try {
                 fixDexManager.fixDexBug(fixFile.getAbsolutePath());
@@ -61,25 +57,6 @@ public class MainActivity extends BaseSkinActivity {
     private void andFix() {
         //下次进入应用获取到这个文件
         File crashFile = ExceptionCrashHandler.getInstance().getCrashFile();
-       /* if (crashFile.exists()){
-            //如果文件存在，上传服务器 。。。
-            Logger.d("上传到服务器");
-            //读取出来
-            try {
-                FileReader fileReader = new FileReader(crashFile);
-                int len = 0;
-
-                char[] buf = new char[1024];
-                while ((len = fileReader.read(buf)) != -1){
-                    //继续读
-                    String crashInfo = new String(buf, 0, len);
-                    Logger.d(crashInfo);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }*/
 
         //每次启动的时候，就要去后台获取差分包 fix.patch ，然后修复bug
 
@@ -96,5 +73,20 @@ public class MainActivity extends BaseSkinActivity {
                 Toast.makeText(this, "修复失败", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void click(View view) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setContentView(R.layout.detail_common_dialog)
+                .setText(R.id.submit_btn,"接收")
+                .setOnClickListener(R.id.account_icon_weibo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this, "微博分享", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .fromBottom(true)
+                .fullWidth()
+                .show();
     }
 }

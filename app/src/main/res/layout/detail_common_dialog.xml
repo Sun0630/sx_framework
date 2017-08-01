@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/root_view"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/comment_dialog_bg"
+        android:orientation="vertical"
+        android:padding="10.0dip">
+
+        <EditText
+            android:id="@+id/comment_editor"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_detail_comment_editor"
+            android:hint="@string/ss_share_hint"
+            android:maxHeight="120.0dip"
+            android:padding="9.0dip"
+            android:textColor="@color/comment_dialog_content_text"
+            android:textSize="16.0sp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.0dip"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/share_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dip"
+                android:text="@string/comment_dialog_share_label"
+                android:textColor="@color/comment_dialog_share_text"
+                android:textSize="13.0sp" />
+
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/account_icon_weibo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/account_icon_weibo" />
+
+                <ImageView
+                    android:id="@+id/account_icon_tencent"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/account_icon_tencent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/platform_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/share_label"
+                android:orientation="horizontal" />
+
+            <TextView
+                android:id="@+id/submit_btn"
+                android:layout_width="50.0dip"
+                android:layout_height="25.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_comment_submit"
+                android:gravity="center"
+                android:text="@string/comment_dialog_send"
+                android:textColor="@color/comment_dialog_submit_text"
+                android:textSize="13.0sp" />
+
+            <TextView
+                android:id="@+id/text_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dip"
+                android:layout_toLeftOf="@id/submit_btn"
+                android:textSize="13.0sp"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
