@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.sx.baselibrary.R;
 
@@ -26,6 +26,32 @@ public class AlertDialog extends Dialog {
     public AlertDialog(Context context, int themeResId) {
         super(context, themeResId);
         mAlert = new AlertController(this, getWindow());
+    }
+
+
+    /**
+     * 设置文字
+     *
+     * @param viewId
+     * @param sequence
+     */
+    public void setText(int viewId, CharSequence sequence) {
+        //减少findViewbyid的次数，通过缓存，将本次传过来的viewid存放在SparseArray中，下次取的时候先判断
+        mAlert.setText(viewId,sequence);
+    }
+
+    /**
+     * 设置点击事件
+     *
+     * @param viewId
+     * @param listener
+     */
+    public void setOnClickListener(int viewId, View.OnClickListener listener) {
+        mAlert.setOnClickListener(viewId,listener);
+    }
+
+    public <T extends View> T getView(int viewId) {
+        return mAlert.getView(viewId);
     }
 
     public static class Builder {
@@ -169,7 +195,7 @@ public class AlertDialog extends Dialog {
          * @return
          */
         public Builder fullWidth() {
-            P.mWidth = ViewGroup.LayoutParams.MATCH_PARENT;
+            P.mWidth = FrameLayout.LayoutParams.MATCH_PARENT;
             return this;
         }
 

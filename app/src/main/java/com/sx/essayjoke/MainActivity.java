@@ -2,6 +2,7 @@ package com.sx.essayjoke;
 
 import android.os.Environment;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sx.baselibrary.ExceptionCrashHandler;
@@ -78,15 +79,27 @@ public class MainActivity extends BaseSkinActivity {
     public void click(View view) {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setContentView(R.layout.detail_common_dialog)
-                .setText(R.id.submit_btn,"接收")
-                .setOnClickListener(R.id.account_icon_weibo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(MainActivity.this, "微博分享", Toast.LENGTH_SHORT).show();
-                    }
-                })
                 .fromBottom(true)
                 .fullWidth()
                 .show();
+
+        final EditText et_common = dialog.getView(R.id.comment_editor);
+        dialog.setText(R.id.submit_btn,"发送");
+        dialog.setOnClickListener(R.id.submit_btn, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, et_common.getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    public void Tan(View view) {
+        android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setIcon(R.mipmap.account_icon_tencent)
+                .show();
+
     }
 }

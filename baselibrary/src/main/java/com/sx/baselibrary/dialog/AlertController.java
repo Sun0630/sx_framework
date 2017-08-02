@@ -5,9 +5,9 @@ import android.content.DialogInterface;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 /**
  * @Author sunxin
@@ -20,13 +20,16 @@ class AlertController {
 
     private AlertDialog mDialog;
     private Window mWindow;
+    private DialogViewHelper mDialogViewHelper;
 
     public AlertController(AlertDialog dialog, Window window) {
-
         mDialog = dialog;
         mWindow = window;
     }
 
+    public void setDialogViewHelper(DialogViewHelper dialogViewHelper) {
+        mDialogViewHelper = dialogViewHelper;
+    }
 
     /**
      * 获取Dialog
@@ -44,6 +47,18 @@ class AlertController {
      */
     public Window getWindow() {
         return mWindow;
+    }
+
+    public void setText(int viewId, CharSequence text) {
+        mDialogViewHelper.setText(viewId, text);
+    }
+
+    public void setOnClickListener(int viewId, View.OnClickListener listener) {
+        mDialogViewHelper.setOnClickListener(viewId, listener);
+    }
+
+    public <T extends View> T getView(int viewId) {
+        return mDialogViewHelper.getView(viewId);
     }
 
 
@@ -67,12 +82,12 @@ class AlertController {
         //存放点击事件的修改
         public SparseArray<View.OnClickListener> clickArray = new SparseArray<>();
         //宽度
-        public int mWidth = ViewGroup.LayoutParams.WRAP_CONTENT;
+        public int mWidth = FrameLayout.LayoutParams.WRAP_CONTENT;
         //位置
-        public int mGravity  = Gravity.CENTER;
+        public int mGravity = Gravity.CENTER;
         public int mAnimation = 0;
         //设置高
-        public int mHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
+        public int mHeight = FrameLayout.LayoutParams.WRAP_CONTENT;
 
 
         public AlertParams(Context context, int themeResId) {
@@ -82,9 +97,10 @@ class AlertController {
 
         public void apply(AlertController alert) {
             //设置参数
-
             //设置布局 DialogViewHelper
+
             DialogViewHelper viewHelper = null;
+
             if (mViewLayoutResId != 0) {
                 viewHelper = new DialogViewHelper(mContext, mViewLayoutResId);
             }
@@ -103,6 +119,8 @@ class AlertController {
 
             alert.getDialog().setContentView(viewHelper.getContentView());
 
+            alert.setDialogViewHelper(viewHelper);
+
             //设置文本
             int textArraySize = textArray.size();
             for (int i = 0; i < textArraySize; i++) {
@@ -118,7 +136,7 @@ class AlertController {
             //自定义 全屏，从底部弹出，默认动画
             //设置动画
             Window window = alert.getWindow();
-            if (mAnimation!=0) {
+            if (mAnimation != 0) {
                 window.setWindowAnimations(mAnimation);
             }
 
