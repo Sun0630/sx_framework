@@ -8,6 +8,8 @@ import com.alipay.euler.andfix.patch.PatchManager;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.sx.baselibrary.ExceptionCrashHandler;
+import com.sx.baselibrary.http.HttpUtils;
+import com.sx.baselibrary.http.OkHttpEngine;
 
 /**
  * @Author Sunxin
@@ -24,6 +26,8 @@ public class MyApplication extends Application {
         super.onCreate();
         //初始化全局处理异常类
         initLogger();
+        //初始化网络请求引擎为okHttp
+        HttpUtils.init(new OkHttpEngine());
         ExceptionCrashHandler.getInstance().init(this);
         initAndFix();//初始化阿里热修复andfix
     }

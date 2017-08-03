@@ -49,6 +49,10 @@ public class MainActivity extends BaseSkinActivity {
 
         //阿里热修复
 //        andFix();
+
+        //网络请求
+
+
     }
 
     /**

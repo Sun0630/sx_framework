@@ -85,7 +85,7 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
 
         //由于调用的时候没有传入根布局id，所以需要遍历布局找到根布局
         if (mParams.mParent == null) {
-            ViewGroup rootActivity = (ViewGroup) ((Activity) mParams.mContext).findViewById(android.R.id.content);
+            ViewGroup rootActivity = (ViewGroup) ((Activity) mParams.mContext).getWindow().getDecorView();
             mParams.mParent = (ViewGroup) rootActivity.getChildAt(0);
         }
 
