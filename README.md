@@ -5,4 +5,5 @@
 * 创建全局的异常捕捉类
 * 阿里热修复框架:AndFix
 * 自定义热修复框架
-* 自定义AlertDialog
+* 使用Builder设计模式打造支持链式调用的AlertDialog
+* 使用Builder设计模式打造通用的支持链式调用的顶部标题栏

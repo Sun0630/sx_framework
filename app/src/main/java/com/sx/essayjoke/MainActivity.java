@@ -9,6 +9,7 @@ import com.sx.baselibrary.ExceptionCrashHandler;
 import com.sx.baselibrary.dialog.AlertDialog;
 import com.sx.baselibrary.fix.FixDexManager;
 import com.sx.framelibrary.BaseSkinActivity;
+import com.sx.framelibrary.DefaultNavigationBar;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,17 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initTitle() {
-
+        DefaultNavigationBar defaultNavigationBar = new DefaultNavigationBar.Builder(this)
+                .setTitle("投稿")
+                .setRightText("发布")
+                .setOnRightClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this, "已经发布", Toast.LENGTH_SHORT).show();
+                    }
+                })
+//                .setRightIcon(R.mipmap.account_icon_weibo)
+                .build();
     }
 
     @Override
@@ -84,7 +95,7 @@ public class MainActivity extends BaseSkinActivity {
                 .show();
 
         final EditText et_common = dialog.getView(R.id.comment_editor);
-        dialog.setText(R.id.submit_btn,"发送");
+        dialog.setText(R.id.submit_btn, "发送");
         dialog.setOnClickListener(R.id.submit_btn, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,11 +106,4 @@ public class MainActivity extends BaseSkinActivity {
 
     }
 
-    public void Tan(View view) {
-        android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(this)
-                .setTitle("提示")
-                .setIcon(R.mipmap.account_icon_tencent)
-                .show();
-
-    }
 }
