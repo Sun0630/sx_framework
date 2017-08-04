@@ -1,13 +1,17 @@
 package com.sx.essayjoke;
 
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
 import com.sx.baselibrary.ExceptionCrashHandler;
 import com.sx.baselibrary.dialog.AlertDialog;
 import com.sx.baselibrary.fix.FixDexManager;
+import com.sx.baselibrary.http.EngineCallBack;
+import com.sx.baselibrary.http.HttpUtils;
 import com.sx.framelibrary.BaseSkinActivity;
 import com.sx.framelibrary.DefaultNavigationBar;
 
@@ -51,7 +55,26 @@ public class MainActivity extends BaseSkinActivity {
 //        andFix();
 
         //网络请求
+        HttpUtils
+                .with(this)
+                .get()
+                .url("http://is.snssdk.com/2/essay/discovery/v3/")
+                .addParams("", "")
+                .excute(new EngineCallBack() {
+                    @Override
+                    public void onError(Exception e) {
 
+                    }
+
+                    @Override
+                    public void onSuccess(final String result) {
+
+                        Logger.json("请求的最终结果：" + result);
+
+                        Log.d("请求的最终结果", result);
+                        System.out.println("请求的最终结果" + result);
+                    }
+                });
 
     }
 

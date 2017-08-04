@@ -1,5 +1,7 @@
 package com.sx.baselibrary.http;
 
+import android.content.Context;
+
 import java.util.Map;
 
 /**
@@ -17,7 +19,7 @@ public interface IHttpEngine {
      * @param params
      * @param callBack
      */
-    void get(String url, Map<String, Object> params, EngineCallBack callBack);
+    void get(Context context, String url, Map<String, Object> params, EngineCallBack callBack);
 
     /**
      * get请求
@@ -26,7 +28,7 @@ public interface IHttpEngine {
      * @param params
      * @param callBack
      */
-    void post(String url, Map<String, Object> params, EngineCallBack callBack);
+    void post(Context context,String url, Map<String, Object> params, EngineCallBack callBack);
 
 
     //上传文件
