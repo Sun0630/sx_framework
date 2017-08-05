@@ -6,17 +6,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
 import com.sx.baselibrary.ExceptionCrashHandler;
 import com.sx.baselibrary.dialog.AlertDialog;
 import com.sx.baselibrary.fix.FixDexManager;
-import com.sx.baselibrary.http.EngineCallBack;
-import com.sx.baselibrary.http.HttpUtils;
+import com.sx.essayjoke.model.Person;
 import com.sx.framelibrary.BaseSkinActivity;
 import com.sx.framelibrary.DefaultNavigationBar;
+import com.sx.framelibrary.db.DaoSupportFactory;
+import com.sx.framelibrary.db.IDaoSupport;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends BaseSkinActivity {
 
@@ -48,33 +49,60 @@ public class MainActivity extends BaseSkinActivity {
     @Override
     protected void initData() {
 
+        //
+        IDaoSupport<Person> daoSupport = DaoSupportFactory
+                .getFactory()
+                .getDao(Person.class);
+
+        //插入10数据
+        ArrayList<Person> list = new ArrayList<>();
+        for (int i = 0; i < 5000; i++) {
+            list.add(new Person("sunxin", 1 + i));
+        }
+        //测试插入5000条数据的效率，并优化
+        long startTime = System.currentTimeMillis();
+        daoSupport.insert(list);
+        long endTime = System.currentTimeMillis();
+        //优化前：47035 ms
+        //          41801
+        Log.e("TAG", "Time---》" + (endTime - startTime));
+
         //自定义热修复
-        fixDexBug();
+//        fixDexBug();
 
         //阿里热修复
 //        andFix();
 
         //网络请求
-        HttpUtils
-                .with(this)
-                .get()
-                .url("http://is.snssdk.com/2/essay/discovery/v3/")
-                .addParams("", "")
-                .excute(new EngineCallBack() {
-                    @Override
-                    public void onError(Exception e) {
+//        HttpUtils
+//                .with(this)
+//                .get()
+//                .url("http://is.snssdk.com/2/essay/discovery/v3/")//路径和参数都需要放入到jni中
+//                .addParams("iid", "6152551759")
+//                .addParams("aid", "7")
+//                .excute(new HttpCallBack<DiscoverListResult>() {
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(DiscoverListResult result) {
+//                        // result --> 对象
+//                        Log.d("请求的最终结果", result.getData().getCategories().getName());
+//
+//                    }
+//                });
 
-                    }
-
-                    @Override
-                    public void onSuccess(final String result) {
-
-                        Logger.json("请求的最终结果：" + result);
-
-                        Log.d("请求的最终结果", result);
-                        System.out.println("请求的最终结果" + result);
-                    }
-                });
+        /**
+         * 遗留的问题：
+         * 1，请求参数，有很多都是公用的，可以抽取出来
+         * 2，JSON转换成对象，不能使用泛型
+         * 3，数据库的问题，数据缓存问题，第三方数据库都是缓存在/data/data/<packageName>/database/下
+         *
+         * 工厂设计模式+单例设计模式 --->> UML图
+         */
 
     }
 

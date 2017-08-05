@@ -33,7 +33,6 @@ public class OkHttpEngine implements IHttpEngine {
     @Override
     public void get(Context context, String url, Map<String, Object> params, final EngineCallBack callBack) {
         String joinurl = HttpUtils.joinParams(url, params);
-        Logger.d("OkHttpEngine-->Get:", joinurl);
         Log.d("OkHttpEngine-->Get:",joinurl);
         Request.Builder requestBuilder = new Request.Builder().get().url(url).tag(context);
         final Request request = requestBuilder.build();

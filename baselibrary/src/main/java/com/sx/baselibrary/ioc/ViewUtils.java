@@ -143,7 +143,7 @@ public class ViewUtils {
                 e.printStackTrace();
                 //处理没有传View的可能性
                 try {
-                    mMethod.invoke(mObject,null);
+                    mMethod.invoke(mObject,mObject);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }

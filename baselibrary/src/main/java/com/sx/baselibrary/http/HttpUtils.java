@@ -91,6 +91,11 @@ public class HttpUtils {
      * @param callBack
      */
     public void excute(EngineCallBack callBack) {
+
+        //调用callback的
+        callBack.onPreExcute(mContext,mParams);
+
+
         if (callBack == null) {
             callBack = EngineCallBack.DEFAULT_CALL_BACK;
         }
