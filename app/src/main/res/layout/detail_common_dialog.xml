@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:id="@+id/root_view"
-             android:layout_width="match_parent"
+             android:layout_width="fill_parent"
              android:layout_height="wrap_content">
 
     <LinearLayout
@@ -39,7 +39,6 @@
                 android:textSize="13.0sp" />
 
             <LinearLayout
-                android:layout_margin="5dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">

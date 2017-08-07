@@ -5,9 +5,9 @@ import android.content.DialogInterface;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 /**
  * @Author sunxin
@@ -82,12 +82,12 @@ class AlertController {
         //存放点击事件的修改
         public SparseArray<View.OnClickListener> clickArray = new SparseArray<>();
         //宽度
-        public int mWidth = FrameLayout.LayoutParams.WRAP_CONTENT;
+        public int mWidth = ViewGroup.LayoutParams.WRAP_CONTENT;
         //位置
         public int mGravity = Gravity.CENTER;
         public int mAnimation = 0;
         //设置高
-        public int mHeight = FrameLayout.LayoutParams.WRAP_CONTENT;
+        public int mHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
 
 
         public AlertParams(Context context, int themeResId) {
@@ -115,9 +115,9 @@ class AlertController {
             }
 
             //为Dialog设置布局
-//            alert.getWindow().setContentView(viewHelper.getContentView());
+            alert.getWindow().setContentView(viewHelper.getContentView());
 
-            alert.getDialog().setContentView(viewHelper.getContentView());
+//            alert.getDialog().setContentView(viewHelper.getContentView());
 
             alert.setDialogViewHelper(viewHelper);
 

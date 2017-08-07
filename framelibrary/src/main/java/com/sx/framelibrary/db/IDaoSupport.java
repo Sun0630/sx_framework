@@ -2,6 +2,8 @@ package com.sx.framelibrary.db;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.sx.framelibrary.db.crud.QuerySupport;
+
 import java.util.List;
 
 /**
@@ -36,5 +38,12 @@ public interface IDaoSupport<T> {
      */
     void insert(List<T> datas);
 
+
+    /**
+     * 查询支持类
+     *
+     * @return
+     */
+    QuerySupport<T> querySupport();
 
 }

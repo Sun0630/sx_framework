@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
 import com.sx.baselibrary.ExceptionCrashHandler;
 import com.sx.baselibrary.dialog.AlertDialog;
 import com.sx.baselibrary.fix.FixDexManager;
@@ -17,9 +18,11 @@ import com.sx.framelibrary.db.IDaoSupport;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseSkinActivity {
+
+    private static final String TAG = "Main";
 
     @Override
     protected void setContentView() {
@@ -55,17 +58,35 @@ public class MainActivity extends BaseSkinActivity {
                 .getDao(Person.class);
 
         //插入10数据
-        ArrayList<Person> list = new ArrayList<>();
-        for (int i = 0; i < 5000; i++) {
-            list.add(new Person("sunxin", 1 + i));
+//        ArrayList<Person> list = new ArrayList<>();
+//        for (int i = 0; i < 100; i++) {
+//            list.add(new Person("sunxin", 1 + i));
+//        }
+//        //测试插入5000条数据的效率，并优化
+//        long startTime = System.currentTimeMillis();
+//        daoSupport.insert(list);
+//        long endTime = System.currentTimeMillis();
+//        //优化前：47035 ms
+//        //          41801
+//        Log.e("TAG", "Time---》" + (endTime - startTime));
+
+        //查询所有数据的条目数
+//        List<Person> persons = daoSupport.querySupport().queryAll();
+//        Log.e(TAG, "initData: "+persons.size() );
+
+
+
+        //链式调用查询
+        List<Person> value = daoSupport
+                .querySupport()
+                .selection("age = ?")
+                .selectionArgs("24")
+                .query();
+        Logger.d("------------" + value.size());
+        for (Person person : value) {
+            Log.e(TAG, "initData: " + person.toString());
+            Logger.d(person.toString());
         }
-        //测试插入5000条数据的效率，并优化
-        long startTime = System.currentTimeMillis();
-        daoSupport.insert(list);
-        long endTime = System.currentTimeMillis();
-        //优化前：47035 ms
-        //          41801
-        Log.e("TAG", "Time---》" + (endTime - startTime));
 
         //自定义热修复
 //        fixDexBug();

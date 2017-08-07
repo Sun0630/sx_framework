@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.util.ArrayMap;
 
+import com.sx.framelibrary.db.crud.QuerySupport;
 import com.sx.framelibrary.utils.DaoUtils;
 
 import java.lang.reflect.Field;
@@ -81,6 +82,43 @@ public class DaoSupport<T> implements IDaoSupport<T> {
         mSqLiteDatabase.setTransactionSuccessful();
         mSqLiteDatabase.endTransaction();
     }
+
+    QuerySupport<T> mQuerySupport = null;
+
+    @Override
+    public QuerySupport<T> querySupport() {
+        if (mQuerySupport == null) {
+            return new QuerySupport<>(mSqLiteDatabase, mTClass);
+        }
+        return mQuerySupport;
+    }
+
+
+    /**
+     * 删除
+     *
+     * @param whereClause
+     * @param whereArgs
+     * @return
+     */
+    public int delete(String whereClause, String[] whereArgs) {
+
+        return mSqLiteDatabase.delete(DaoUtils.getTableName(mTClass), whereClause, whereArgs);
+    }
+
+    /**
+     * 修改
+     *
+     * @param obj
+     * @param whereClause
+     * @param whereArgs
+     * @return
+     */
+    public int update(T obj, String whereClause, String[] whereArgs) {
+        ContentValues values = contentValuesByObj(obj);
+        return mSqLiteDatabase.update(DaoUtils.getTableName(mTClass), values, whereClause, whereArgs);
+    }
+
 
     /**
      * 将任意对象obj转换成ContentValues

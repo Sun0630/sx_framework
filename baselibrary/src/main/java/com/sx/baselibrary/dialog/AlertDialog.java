@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 
 import com.sx.baselibrary.R;
 
@@ -195,7 +195,7 @@ public class AlertDialog extends Dialog {
          * @return
          */
         public Builder fullWidth() {
-            P.mWidth = FrameLayout.LayoutParams.MATCH_PARENT;
+            P.mWidth = ViewGroup.LayoutParams.MATCH_PARENT;
             return this;
         }
 
