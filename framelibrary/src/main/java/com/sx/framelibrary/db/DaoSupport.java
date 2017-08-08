@@ -101,7 +101,7 @@ public class DaoSupport<T> implements IDaoSupport<T> {
      * @param whereArgs
      * @return
      */
-    public int delete(String whereClause, String[] whereArgs) {
+    public int delete(String whereClause, String... whereArgs) {
 
         return mSqLiteDatabase.delete(DaoUtils.getTableName(mTClass), whereClause, whereArgs);
     }

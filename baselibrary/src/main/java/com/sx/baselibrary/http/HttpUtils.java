@@ -22,7 +22,8 @@ public class HttpUtils {
     public static final int GET_TYPE = 0x0011;
     public static final int POST_TYPE = 0x0012;
     //默认的引擎是okHttp
-    private static IHttpEngine mHttpEngine = new OkHttpEngine();
+    private static IHttpEngine mHttpEngine = null;
+    private boolean mIsCache = false;
 
 
     private HttpUtils(Context context) {
@@ -33,6 +34,17 @@ public class HttpUtils {
 
     public static HttpUtils with(Context context) {
         return new HttpUtils(context);
+    }
+
+    /**
+     * 是否添加缓存功能
+     *
+     * @param isCache
+     * @return
+     */
+    public HttpUtils cache(boolean isCache) {
+        mIsCache = isCache;
+        return this;
     }
 
     /**
@@ -93,7 +105,7 @@ public class HttpUtils {
     public void excute(EngineCallBack callBack) {
 
         //调用callback的
-        callBack.onPreExcute(mContext,mParams);
+        callBack.onPreExcute(mContext, mParams);
 
 
         if (callBack == null) {
@@ -101,11 +113,11 @@ public class HttpUtils {
         }
 
         if (mType == GET_TYPE) {
-            get(mUrl, mParams, callBack);
+            get(mIsCache,mUrl, mParams, callBack);
         }
 
         if (mType == POST_TYPE) {
-            post(mUrl, mParams, callBack);
+            post(mIsCache,mUrl, mParams, callBack);
         }
     }
 
@@ -128,12 +140,12 @@ public class HttpUtils {
         mHttpEngine = httpEngine;
     }
 
-    private void get(String url, Map<String, Object> params, EngineCallBack callBack) {
-        mHttpEngine.get(mContext, url, params, callBack);
+    private void get(boolean cache,String url, Map<String, Object> params, EngineCallBack callBack) {
+        mHttpEngine.get(cache,mContext, url, params, callBack);
     }
 
-    private void post(String url, Map<String, Object> params, EngineCallBack callBack) {
-        mHttpEngine.post(mContext, url, params, callBack);
+    private void post(boolean cache,String url, Map<String, Object> params, EngineCallBack callBack) {
+        mHttpEngine.post(cache,mContext, url, params, callBack);
     }
 
     /**

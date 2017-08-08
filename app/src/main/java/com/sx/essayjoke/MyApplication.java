@@ -9,7 +9,7 @@ import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.sx.baselibrary.ExceptionCrashHandler;
 import com.sx.baselibrary.http.HttpUtils;
-import com.sx.baselibrary.http.OkHttpEngine;
+import com.sx.framelibrary.http.OkHttpEngine;
 
 /**
  * @Author Sunxin

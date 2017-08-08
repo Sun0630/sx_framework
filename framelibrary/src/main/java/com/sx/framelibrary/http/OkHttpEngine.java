@@ -1,9 +1,12 @@
-package com.sx.baselibrary.http;
+package com.sx.framelibrary.http;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
-import com.orhanobut.logger.Logger;
+import com.sx.baselibrary.http.EngineCallBack;
+import com.sx.baselibrary.http.HttpUtils;
+import com.sx.baselibrary.http.IHttpEngine;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +24,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
 /**
  * @Author sunxin
  * @Date 2017/8/4 0:19
@@ -28,12 +32,36 @@ import okhttp3.Response;
  */
 
 public class OkHttpEngine implements IHttpEngine {
+
+    public static final String TAG = "OkHttpEngine";
+
     private static OkHttpClient okHttpClient = new OkHttpClient();
 
     @Override
-    public void get(Context context, String url, Map<String, Object> params, final EngineCallBack callBack) {
-        String joinurl = HttpUtils.joinParams(url, params);
-        Log.d("OkHttpEngine-->Get:",joinurl);
+    public void get(final boolean cache, Context context, final String url, Map<String, Object> params, final EngineCallBack callBack) {
+        final String joinurl = HttpUtils.joinParams(url, params);
+        Log.d("OkHttpEngine-->Get:", joinurl);
+//        final IDaoSupport<CacheData> cacheDataSupport = DaoSupportFactory
+//                .getFactory()
+//                .getDao(CacheData.class);
+//
+//        final List<CacheData> cacheDatas = cacheDataSupport.querySupport()
+//                .selection("url=?")
+//                .selectionArgs(joinurl)
+//                .query();
+
+        //处理缓存,先判断需不需要缓存，然后判断有没有缓存
+        if (cache) {
+            String resultJson = CacheDataUtil.getCacheResultJson(joinurl);
+            //需要缓存
+            if (!TextUtils.isEmpty(resultJson)) {
+                Log.e(TAG, "get: 读到缓存");
+                //有缓存,直接回调
+                callBack.onSuccess(resultJson);
+            }
+        }
+
+
         Request.Builder requestBuilder = new Request.Builder().get().url(url).tag(context);
         final Request request = requestBuilder.build();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -44,16 +72,36 @@ public class OkHttpEngine implements IHttpEngine {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String result = response.body().string();
-                callBack.onSuccess(result);
-                Logger.json("Get返回结果：" + result);
-                Log.d("Get返回结果",result);
+                String resultJson = response.body().string();
+                //获取到数据之后，先和缓存数据做一个对比，判断是否需要缓存
+
+                if (cache) {
+                    String cacheResultJson = CacheDataUtil.getCacheResultJson(joinurl);
+                    if (!TextUtils.isEmpty(resultJson)) {
+                        // 比对内容
+                        if (resultJson.equals(cacheResultJson)) {
+                            // 内容一样，不需要执行成功成功方法刷新界面
+                            Log.e("数据和缓存一致：", resultJson);
+                            return;
+                        }
+                    }
+                }
+
+                callBack.onSuccess(resultJson);
+                Log.e("Get返回结果", resultJson);
+
+                //缓存数据
+                if (cache) {
+                    Log.e(TAG, "放入缓存");
+                    // 2.3 缓存数据
+                    CacheDataUtil.cacheData(joinurl, resultJson);
+                }
             }
         });
     }
 
     @Override
-    public void post(Context context, String url, Map<String, Object> params, final EngineCallBack callBack) {
+    public void post(boolean cache, Context context, String url, Map<String, Object> params, final EngineCallBack callBack) {
         String joinUrl = HttpUtils.joinParams(url, params);
         Log.d("OkHttpEngine-->Post:", joinUrl);
         RequestBody requestBody = appendBody(params);
@@ -74,8 +122,7 @@ public class OkHttpEngine implements IHttpEngine {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String result = response.body().string();
-                        Logger.json("Post返回结果：" + result);
-                        Log.d("Post返回结果",result);
+                        Log.d("Post返回结果", result);
                         callBack.onSuccess(result);
                     }
                 });

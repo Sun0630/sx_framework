@@ -46,4 +46,24 @@ public interface IDaoSupport<T> {
      */
     QuerySupport<T> querySupport();
 
+    /**
+     * 更新
+     *
+     * @param obj
+     * @param whereClause
+     * @param whereArgs
+     * @return
+     */
+    int update(T obj, String whereClause, String[] whereArgs);
+
+
+    /**
+     * 删除
+     *
+     * @param whereClause
+     * @param whereArgs
+     * @return
+     */
+    int delete(String whereClause, String... whereArgs);
+
 }

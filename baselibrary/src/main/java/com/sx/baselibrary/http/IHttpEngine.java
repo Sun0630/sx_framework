@@ -15,20 +15,22 @@ public interface IHttpEngine {
     /**
      * get请求
      *
+     * @param cache
      * @param url
      * @param params
      * @param callBack
      */
-    void get(Context context, String url, Map<String, Object> params, EngineCallBack callBack);
+    void get(boolean cache, Context context, String url, Map<String, Object> params, EngineCallBack callBack);
 
     /**
      * get请求
      *
+     * @param cache
      * @param url
      * @param params
      * @param callBack
      */
-    void post(Context context,String url, Map<String, Object> params, EngineCallBack callBack);
+    void post(boolean cache, Context context, String url, Map<String, Object> params, EngineCallBack callBack);
 
 
     //上传文件

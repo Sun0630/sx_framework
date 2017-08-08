@@ -6,19 +6,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
 import com.sx.baselibrary.ExceptionCrashHandler;
 import com.sx.baselibrary.dialog.AlertDialog;
 import com.sx.baselibrary.fix.FixDexManager;
+import com.sx.baselibrary.http.HttpUtils;
+import com.sx.essayjoke.model.DiscoverListResult;
 import com.sx.essayjoke.model.Person;
 import com.sx.framelibrary.BaseSkinActivity;
 import com.sx.framelibrary.DefaultNavigationBar;
+import com.sx.framelibrary.HttpCallBack;
 import com.sx.framelibrary.db.DaoSupportFactory;
 import com.sx.framelibrary.db.IDaoSupport;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class MainActivity extends BaseSkinActivity {
 
@@ -51,8 +52,6 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initData() {
-
-        //
         IDaoSupport<Person> daoSupport = DaoSupportFactory
                 .getFactory()
                 .getDao(Person.class);
@@ -77,16 +76,16 @@ public class MainActivity extends BaseSkinActivity {
 
 
         //链式调用查询
-        List<Person> value = daoSupport
-                .querySupport()
-                .selection("age = ?")
-                .selectionArgs("24")
-                .query();
-        Logger.d("------------" + value.size());
-        for (Person person : value) {
-            Log.e(TAG, "initData: " + person.toString());
-            Logger.d(person.toString());
-        }
+//        List<Person> value = daoSupport
+//                .querySupport()
+//                .selection("age = ?")
+//                .selectionArgs("24")
+//                .query();
+//        Logger.d("------------" + value.size());
+//        for (Person person : value) {
+//            Log.e(TAG, "initData: " + person.toString());
+//            Logger.d(person.toString());
+//        }
 
         //自定义热修复
 //        fixDexBug();
@@ -95,26 +94,27 @@ public class MainActivity extends BaseSkinActivity {
 //        andFix();
 
         //网络请求
-//        HttpUtils
-//                .with(this)
-//                .get()
-//                .url("http://is.snssdk.com/2/essay/discovery/v3/")//路径和参数都需要放入到jni中
-//                .addParams("iid", "6152551759")
-//                .addParams("aid", "7")
-//                .excute(new HttpCallBack<DiscoverListResult>() {
-//
-//                    @Override
-//                    public void onError(Exception e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(DiscoverListResult result) {
-//                        // result --> 对象
-//                        Log.d("请求的最终结果", result.getData().getCategories().getName());
-//
-//                    }
-//                });
+        HttpUtils
+                .with(this)
+                .get()
+                .url("http://is.snssdk.com/2/essay/discovery/v3/")//路径和参数都需要放入到jni中
+                .cache(true)//添加缓存
+                .addParams("iid", "6152551759")
+                .addParams("aid", "7")
+                .excute(new HttpCallBack<DiscoverListResult>() {
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(DiscoverListResult result) {
+                        // result --> 对象，会添加缓存功能
+                        Log.e("请求的最终结果", result.getData().getCategories().getName());
+
+                    }
+                });
 
         /**
          * 遗留的问题：
