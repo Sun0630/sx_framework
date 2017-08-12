@@ -17,8 +17,10 @@ import android.view.ViewParent;
 
 import com.sx.baselibrary.base.BaseActivity;
 import com.sx.framelibrary.skin.SkinManager;
+import com.sx.framelibrary.skin.SkinResource;
 import com.sx.framelibrary.skin.attr.SkinAttr;
 import com.sx.framelibrary.skin.attr.SkinView;
+import com.sx.framelibrary.skin.callback.ISkinChangeListener;
 import com.sx.framelibrary.skin.support.SkinAppCompatViewInflater;
 import com.sx.framelibrary.skin.support.SkinAttrSupport;
 
@@ -31,7 +33,7 @@ import java.util.List;
  * @Description 中间层插件换肤
  */
 
-public abstract class BaseSkinActivity extends BaseActivity implements LayoutInflaterFactory {
+public abstract class BaseSkinActivity extends BaseActivity implements LayoutInflaterFactory,ISkinChangeListener {
     private static final String TAG = "BaseSkinActivity";
 
     private SkinAppCompatViewInflater mAppCompatViewInflater;
@@ -62,6 +64,9 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
             SkinView skinView = new SkinView(view, skinAttrs);
             //3,交由SkinManager 统一管理
             managerSkinView(skinView);
+
+            //4,判断需不需要换肤
+            SkinManager.getInstance().checkChangeSkin(skinView);
         }
         return view;
     }
@@ -75,11 +80,18 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
         List<SkinView> skinViews = SkinManager.getInstance().getSkinViews(this);
         if (skinViews == null) {
             skinViews = new ArrayList<>();
+            //this就是Activity的引用，需要解除注册，否则会造成内存泄漏
             SkinManager.getInstance().regisetr(this, skinViews);
         }
         skinViews.add(view);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        SkinManager.getInstance().unregister(this);
+        super.onDestroy();
+    }
 
     public View createView(View parent, final String name, @NonNull Context context,
                            @NonNull AttributeSet attrs) {
@@ -122,5 +134,10 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
             }
             parent = parent.getParent();
         }
+    }
+
+    @Override
+    public void changeSkin(SkinResource skinResource) {
+
     }
 }

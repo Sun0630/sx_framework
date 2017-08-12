@@ -13,6 +13,7 @@ import com.sx.baselibrary.ioc.ViewById;
 import com.sx.framelibrary.BaseSkinActivity;
 import com.sx.framelibrary.DefaultNavigationBar;
 import com.sx.framelibrary.skin.SkinManager;
+import com.sx.framelibrary.skin.SkinResource;
 
 import java.io.File;
 import java.io.IOException;
@@ -235,5 +236,12 @@ public class MainActivity extends BaseSkinActivity {
      */
     public void clickJump(View view) {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+
+    @Override
+    public void changeSkin(SkinResource skinResource) {
+        super.changeSkin(skinResource);
+        Toast.makeText(this, "换肤了~", Toast.LENGTH_SHORT).show();
     }
 }
