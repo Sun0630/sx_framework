@@ -10,4 +10,6 @@
     <color name="list_item_divider">#ffe6e6e6</color>
     <color name="comment_dialog_share_text">#ff333333</color>
     <color name="comment_dialog_submit_text">#ffffffff</color>
+    <color name="main_bg_color">#32e223</color>
+    <color name="main_bg">#ecc104</color>
 </resources>

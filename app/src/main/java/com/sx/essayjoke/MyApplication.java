@@ -10,6 +10,7 @@ import com.orhanobut.logger.Logger;
 import com.sx.baselibrary.ExceptionCrashHandler;
 import com.sx.baselibrary.http.HttpUtils;
 import com.sx.framelibrary.http.OkHttpEngine;
+import com.sx.framelibrary.skin.SkinManager;
 
 /**
  * @Author Sunxin
@@ -30,6 +31,9 @@ public class MyApplication extends Application {
         HttpUtils.init(new OkHttpEngine());
         ExceptionCrashHandler.getInstance().init(this);
         initAndFix();//初始化阿里热修复andfix
+
+        //初始化换肤
+        SkinManager.getInstance().init(this);
     }
 
 

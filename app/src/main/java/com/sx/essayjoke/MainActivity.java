@@ -1,22 +1,18 @@
 package com.sx.essayjoke;
 
+import android.content.Intent;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.sx.baselibrary.ExceptionCrashHandler;
-import com.sx.baselibrary.dialog.AlertDialog;
 import com.sx.baselibrary.fix.FixDexManager;
-import com.sx.baselibrary.http.HttpUtils;
-import com.sx.essayjoke.model.DiscoverListResult;
-import com.sx.essayjoke.model.Person;
+import com.sx.baselibrary.ioc.ViewById;
 import com.sx.framelibrary.BaseSkinActivity;
 import com.sx.framelibrary.DefaultNavigationBar;
-import com.sx.framelibrary.HttpCallBack;
-import com.sx.framelibrary.db.DaoSupportFactory;
-import com.sx.framelibrary.db.IDaoSupport;
+import com.sx.framelibrary.skin.SkinManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +20,10 @@ import java.io.IOException;
 public class MainActivity extends BaseSkinActivity {
 
     private static final String TAG = "Main";
+
+    @ViewById(R.id.tv_text)
+    private Button mChangeSkin;
+    private ImageView mImageView;
 
     @Override
     protected void setContentView() {
@@ -47,14 +47,14 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initView() {
-
+//        mImageView = (ImageView) findViewById(R.id.iv_image);
     }
 
     @Override
     protected void initData() {
-        IDaoSupport<Person> daoSupport = DaoSupportFactory
-                .getFactory()
-                .getDao(Person.class);
+//        IDaoSupport<Person> daoSupport = DaoSupportFactory
+//                .getFactory()
+//                .getDao(Person.class);
 
         //插入10数据
 //        ArrayList<Person> list = new ArrayList<>();
@@ -72,7 +72,6 @@ public class MainActivity extends BaseSkinActivity {
         //查询所有数据的条目数
 //        List<Person> persons = daoSupport.querySupport().queryAll();
 //        Log.e(TAG, "initData: "+persons.size() );
-
 
 
         //链式调用查询
@@ -94,27 +93,44 @@ public class MainActivity extends BaseSkinActivity {
 //        andFix();
 
         //网络请求
-        HttpUtils
-                .with(this)
-                .get()
-                .url("http://is.snssdk.com/2/essay/discovery/v3/")//路径和参数都需要放入到jni中
-                .cache(true)//添加缓存
-                .addParams("iid", "6152551759")
-                .addParams("aid", "7")
-                .excute(new HttpCallBack<DiscoverListResult>() {
+//        HttpUtils
+//                .with(this)
+//                .get()
+//                .url("http://is.snssdk.com/2/essay/discovery/v3/")//路径和参数都需要放入到jni中
+//                .cache(true)//添加缓存
+//                .addParams("iid", "6152551759")
+//                .addParams("aid", "7")
+//                .excute(new HttpCallBack<DiscoverListResult>() {
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(DiscoverListResult result) {
+//                        // result --> 对象，会添加缓存功能
+//                        Log.e("请求的最终结果", result.getData().getCategories().getName());
+//
+//                    }
+//                });
 
-                    @Override
-                    public void onError(Exception e) {
 
-                    }
+//        AlertDialog dialog = new AlertDialog.Builder(this)
+//                .setContentView(R.layout.detail_common_dialog)
+//                .fromBottom(true)
+//                .fullWidth()
+//                .show();
+//
+//        final EditText et_common = dialog.getView(R.id.comment_editor);
+//        dialog.setText(R.id.submit_btn, "发送");
+//        dialog.setOnClickListener(R.id.submit_btn, new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, et_common.getText().toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
-                    @Override
-                    public void onSuccess(DiscoverListResult result) {
-                        // result --> 对象，会添加缓存功能
-                        Log.e("请求的最终结果", result.getData().getCategories().getName());
-
-                    }
-                });
 
         /**
          * 遗留的问题：
@@ -124,6 +140,33 @@ public class MainActivity extends BaseSkinActivity {
          *
          * 工厂设计模式+单例设计模式 --->> UML图
          */
+
+
+        //换肤Demo
+//        mChangeSkin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "点击了", Toast.LENGTH_SHORT).show();
+//                try {
+//                    Resources superRes = getResources();
+//                    //通过反射拿到AssetManager的实例
+//                    AssetManager assets = AssetManager.class.newInstance();
+//                    //通过反射调用addAssetPath
+//                    Method method = AssetManager.class.getDeclaredMethod("addAssetPath", String.class);
+//                    //执行方法
+//                    method.invoke(assets, Environment.getExternalStorageDirectory().getAbsolutePath()
+//                            + File.separator + "changskin.zip");
+//
+//                    Resources resources = new Resources(assets, superRes.getDisplayMetrics()
+//                            , superRes.getConfiguration());
+//                    int id = resources.getIdentifier("a3", "drawable", "com.sx.skinplugin");
+//                    Drawable drawable = resources.getDrawable(id);
+//                    mImageView.setImageDrawable(drawable);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
     }
 
@@ -163,23 +206,34 @@ public class MainActivity extends BaseSkinActivity {
         }
     }
 
+    /**
+     * 换肤
+     *
+     * @param view
+     */
     public void click(View view) {
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setContentView(R.layout.detail_common_dialog)
-                .fromBottom(true)
-                .fullWidth()
-                .show();
-
-        final EditText et_common = dialog.getView(R.id.comment_editor);
-        dialog.setText(R.id.submit_btn, "发送");
-        dialog.setOnClickListener(R.id.submit_btn, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, et_common.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
+        Toast.makeText(this, "点击了", Toast.LENGTH_SHORT).show();
+        String skinPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "red.skin";
+        int result = SkinManager.getInstance().loadSkin(skinPath);
     }
 
+    /**
+     * 默认
+     *
+     * @param view
+     */
+    public void clickDefault(View view) {
+        //加载默认皮肤
+        int result = SkinManager.getInstance().loadDefault();
+    }
+
+    /**
+     * 跳转
+     *
+     * @param view
+     */
+    public void clickJump(View view) {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 }
