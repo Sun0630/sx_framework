@@ -3,15 +3,11 @@ package com.sx.essayjoke;
 import android.content.Intent;
 import android.os.Environment;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.sx.baselibrary.ExceptionCrashHandler;
 import com.sx.baselibrary.fix.FixDexManager;
-import com.sx.baselibrary.ioc.ViewById;
 import com.sx.framelibrary.BaseSkinActivity;
-import com.sx.framelibrary.DefaultNavigationBar;
 import com.sx.framelibrary.skin.SkinManager;
 import com.sx.framelibrary.skin.SkinResource;
 
@@ -22,10 +18,6 @@ public class MainActivity extends BaseSkinActivity {
 
     private static final String TAG = "Main";
 
-    @ViewById(R.id.tv_text)
-    private Button mChangeSkin;
-    private ImageView mImageView;
-
     @Override
     protected void setContentView() {
         setContentView(R.layout.activity_main);
@@ -33,141 +25,15 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initTitle() {
-        DefaultNavigationBar defaultNavigationBar = new DefaultNavigationBar.Builder(this)
-                .setTitle("投稿")
-                .setRightText("发布")
-                .setOnRightClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(MainActivity.this, "已经发布", Toast.LENGTH_SHORT).show();
-                    }
-                })
-//                .setRightIcon(R.mipmap.account_icon_weibo)
-                .build();
+
     }
 
     @Override
     protected void initView() {
-//        mImageView = (ImageView) findViewById(R.id.iv_image);
     }
 
     @Override
     protected void initData() {
-//        IDaoSupport<Person> daoSupport = DaoSupportFactory
-//                .getFactory()
-//                .getDao(Person.class);
-
-        //插入10数据
-//        ArrayList<Person> list = new ArrayList<>();
-//        for (int i = 0; i < 100; i++) {
-//            list.add(new Person("sunxin", 1 + i));
-//        }
-//        //测试插入5000条数据的效率，并优化
-//        long startTime = System.currentTimeMillis();
-//        daoSupport.insert(list);
-//        long endTime = System.currentTimeMillis();
-//        //优化前：47035 ms
-//        //          41801
-//        Log.e("TAG", "Time---》" + (endTime - startTime));
-
-        //查询所有数据的条目数
-//        List<Person> persons = daoSupport.querySupport().queryAll();
-//        Log.e(TAG, "initData: "+persons.size() );
-
-
-        //链式调用查询
-//        List<Person> value = daoSupport
-//                .querySupport()
-//                .selection("age = ?")
-//                .selectionArgs("24")
-//                .query();
-//        Logger.d("------------" + value.size());
-//        for (Person person : value) {
-//            Log.e(TAG, "initData: " + person.toString());
-//            Logger.d(person.toString());
-//        }
-
-        //自定义热修复
-//        fixDexBug();
-
-        //阿里热修复
-//        andFix();
-
-        //网络请求
-//        HttpUtils
-//                .with(this)
-//                .get()
-//                .url("http://is.snssdk.com/2/essay/discovery/v3/")//路径和参数都需要放入到jni中
-//                .cache(true)//添加缓存
-//                .addParams("iid", "6152551759")
-//                .addParams("aid", "7")
-//                .excute(new HttpCallBack<DiscoverListResult>() {
-//
-//                    @Override
-//                    public void onError(Exception e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(DiscoverListResult result) {
-//                        // result --> 对象，会添加缓存功能
-//                        Log.e("请求的最终结果", result.getData().getCategories().getName());
-//
-//                    }
-//                });
-
-
-//        AlertDialog dialog = new AlertDialog.Builder(this)
-//                .setContentView(R.layout.detail_common_dialog)
-//                .fromBottom(true)
-//                .fullWidth()
-//                .show();
-//
-//        final EditText et_common = dialog.getView(R.id.comment_editor);
-//        dialog.setText(R.id.submit_btn, "发送");
-//        dialog.setOnClickListener(R.id.submit_btn, new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, et_common.getText().toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
-        /**
-         * 遗留的问题：
-         * 1，请求参数，有很多都是公用的，可以抽取出来
-         * 2，JSON转换成对象，不能使用泛型
-         * 3，数据库的问题，数据缓存问题，第三方数据库都是缓存在/data/data/<packageName>/database/下
-         *
-         * 工厂设计模式+单例设计模式 --->> UML图
-         */
-
-
-        //换肤Demo
-//        mChangeSkin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "点击了", Toast.LENGTH_SHORT).show();
-//                try {
-//                    Resources superRes = getResources();
-//                    //通过反射拿到AssetManager的实例
-//                    AssetManager assets = AssetManager.class.newInstance();
-//                    //通过反射调用addAssetPath
-//                    Method method = AssetManager.class.getDeclaredMethod("addAssetPath", String.class);
-//                    //执行方法
-//                    method.invoke(assets, Environment.getExternalStorageDirectory().getAbsolutePath()
-//                            + File.separator + "changskin.zip");
-//
-//                    Resources resources = new Resources(assets, superRes.getDisplayMetrics()
-//                            , superRes.getConfiguration());
-//                    int id = resources.getIdentifier("a3", "drawable", "com.sx.skinplugin");
-//                    Drawable drawable = resources.getDrawable(id);
-//                    mImageView.setImageDrawable(drawable);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
 
     }
 
