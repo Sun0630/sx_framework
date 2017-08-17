@@ -107,7 +107,29 @@
         3. 恢复默认皮肤
         4. 自定义View的换肤(提供接口回调)
         
+                 //加载指定皮肤，皮肤文件需要联网获取
+                 String skinPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                                + File.separator + "red.skin";
+                 int result = SkinManager.getInstance().loadSkin(skinPath);
+                
+                
+                 //加载默认皮肤
+                 int result = SkinManager.getInstance().loadDefault();
+                        
     * 内存泄漏的监测和分析
          1. 垃圾回收问题(GC)
          2. 内存泄漏(不要把Activity的this交出去)
+         
 * IPC进程间通信
+    * Binder源码阅读7
+    * Service保活
+        * 进程被杀的原因
+            1. 系统内存不足，需要回收，杀掉进程
+                * 进程的优先级（前台进程，可见进程，服务进程，后台进程，空进程）
+            2. 第三方清理软件会杀掉进程
+            3. Rom厂商会在应用退出的时候清理进程
+        * 解决方案
+            1. 提高进程优先级，比如启动Service的时候调用startForeground()
+            2. 当应用退到后台的时候要释放资源，比如轮播图，在退到后台的时候就不需要轮播了
+            3. 开启守护进程，避免第三方清理软件杀死进程
+            4. 使用JobScheduler，防止手机清除缓存的时候杀死进程

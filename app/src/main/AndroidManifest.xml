@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    //JObService权限
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -23,6 +26,33 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".keepservice.MessageService"
+            android:enabled="true"
+            android:exported="true"
+            >
+
+            <!-- 隐式调用 -->
+            <intent-filter>
+                <action android:name="com.sx.aidl.message"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".keepservice.GuardService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":GuardService"
+            >
+        </service>
+
+        <service
+            android:name=".keepservice.JobWakeUpService"
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            />
     </application>
 
 </manifest>

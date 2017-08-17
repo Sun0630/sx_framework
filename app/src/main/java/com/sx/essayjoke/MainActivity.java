@@ -1,14 +1,21 @@
 package com.sx.essayjoke;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Environment;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.view.View;
 import android.widget.Toast;
 
 import com.sx.baselibrary.ExceptionCrashHandler;
 import com.sx.baselibrary.fix.FixDexManager;
+import com.sx.essayjoke.keepservice.GuardService;
+import com.sx.essayjoke.keepservice.JobWakeUpService;
+import com.sx.essayjoke.keepservice.MessageService;
 import com.sx.framelibrary.BaseSkinActivity;
-import com.sx.framelibrary.skin.SkinManager;
 import com.sx.framelibrary.skin.SkinResource;
 
 import java.io.File;
@@ -34,8 +41,33 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initData() {
+        //启动服务，这是服务端
+        startService(new Intent(this,MessageService.class));
+        startService(new Intent(this,GuardService.class));
 
+        //必须5.0以上才能运行
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            startService(new Intent(this,JobWakeUpService.class));
+        }
+
+        //写在一起了啊，这是客户端要去连接服务端
+//        Intent service = new Intent(this,MessageService.class);
+//        bindService(service,conn, Context.BIND_AUTO_CREATE);
     }
+
+    private IUser mUser;
+    private ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            //连接成功
+            mUser = IUser.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            //断开连接
+        }
+    };
 
     /**
      * 自定义热修复
@@ -73,41 +105,26 @@ public class MainActivity extends BaseSkinActivity {
         }
     }
 
-    /**
-     * 换肤
-     *
-     * @param view
-     */
-    public void click(View view) {
-        Toast.makeText(this, "点击了", Toast.LENGTH_SHORT).show();
-        String skinPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "red.skin";
-        int result = SkinManager.getInstance().loadSkin(skinPath);
-    }
-
-    /**
-     * 默认
-     *
-     * @param view
-     */
-    public void clickDefault(View view) {
-        //加载默认皮肤
-        int result = SkinManager.getInstance().loadDefault();
-    }
-
-    /**
-     * 跳转
-     *
-     * @param view
-     */
-    public void clickJump(View view) {
-        startActivity(new Intent(this, MainActivity.class));
-    }
-
 
     @Override
     public void changeSkin(SkinResource skinResource) {
         super.changeSkin(skinResource);
         Toast.makeText(this, "换肤了~", Toast.LENGTH_SHORT).show();
+    }
+
+    public void getUserame(View view) {
+        try {
+            Toast.makeText(this, mUser.getUsername(), Toast.LENGTH_SHORT).show();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getPassword(View view) {
+        try {
+            Toast.makeText(this, mUser.getPassword(), Toast.LENGTH_SHORT).show();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }
