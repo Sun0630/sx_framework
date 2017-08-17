@@ -21,23 +21,23 @@ public class ViewUtils {
      * @param activity
      */
     public static void inject(Activity activity) {
-        inject(new ViewFinder(activity), activity);
+        inject(activity,new ViewFinder(activity));
     }
 
 
     public static void inject(View view) {
-        inject(new ViewFinder(view), view);
+        inject(view,new ViewFinder(view));
     }
 
-    public static void inject(View view, Object object) {
-        inject(new ViewFinder(view), object);
+    public static void inject(Object object,View view ) {
+        inject(object,new ViewFinder(view));
     }
 
     /**
      * @param viewFinder
      * @param object     反射需要执行的类
      */
-    public static void inject(ViewFinder viewFinder, Object object) {
+    public static void inject(Object object, ViewFinder viewFinder) {
         injectFiled(viewFinder, object);//注入属性
         injectEvent(viewFinder, object);//注入事件
     }

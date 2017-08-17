@@ -68,6 +68,15 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
     }
 
     /**
+     * 左侧箭头显示
+     * @param viewId
+     * @param visiable
+     */
+    protected void setVisiable(int viewId, int visiable) {
+        findViewById(viewId).setVisibility(visiable);
+    }
+
+    /**
      * 简化 findViewById不用再强转了
      *
      * @param viewId

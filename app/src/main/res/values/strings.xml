@@ -5,4 +5,8 @@
 
     <string name="comment_dialog_send">发送</string>
     <string name="comment_dialog_share_label">分享到：</string>
+    <string name="home_main">首页</string>
+    <string name="home_discovery">发现</string>
+    <string name="home_fresh">新鲜</string>
+    <string name="home_me">消息</string>
 </resources>

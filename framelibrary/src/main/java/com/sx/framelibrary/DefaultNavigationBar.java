@@ -30,10 +30,12 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
         setText(R.id.title, getParams().mTitle);
         setText(R.id.right_text, getParams().mRightText);
 
-        setOnClickListener(R.id.right_text, getParams().mRightClickListener);
+        setOnClickListener(R.id.back, getParams().mRightClickListener);
         setRightIcon(R.id.right_text, getParams().mRightIcon);
-        //左边
+        //左边箭头
+        setVisiable(R.id.back,getParams().mLeftIconVisiable);
     }
+
 
 
     public static class Builder extends AbsNavigationBar.Builder {
@@ -113,6 +115,15 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
             return this;
         }
 
+        /**
+         * 隐藏左侧的图标
+         * @return
+         */
+        public DefaultNavigationBar.Builder hideLeftIcon() {
+            P.mLeftIconVisiable = View.INVISIBLE;
+            return this;
+        }
+
 
         public static class DefaultNavigationParams extends AbsNavigationParams {
             public String mTitle;
@@ -125,6 +136,7 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
                     ((Activity) mContext).finish();
                 }
             };//左侧按钮点击事件写默认关闭
+            public int mLeftIconVisiable = View.VISIBLE;//左侧箭头
 
             //所有的效果都放在这里
 

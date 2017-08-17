@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/root_view"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clipToPadding="false"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/main_tab_fl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <RadioGroup
+        android:id="@android:id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_height"
+        android:background="@color/title_bar_bg_day"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/home_rb"
+            style="@style/home_bottom_tab_style"
+            android:checked="true"
+            android:drawableTop="@drawable/ic_tab_home"
+            android:text="@string/home_main"
+            />
+
+        <RadioButton
+            android:id="@+id/find_rb"
+            style="@style/home_bottom_tab_style"
+            android:drawableTop="@drawable/ic_tab_discovery"
+            android:text="@string/home_discovery"
+            />
+
+        <RadioButton
+            android:id="@+id/new_rb"
+            style="@style/home_bottom_tab_style"
+            android:drawableTop="@drawable/ic_tab_msg"
+            android:text="@string/home_fresh"
+            />
+
+        <RadioButton
+            android:id="@+id/msg_rb"
+            style="@style/home_bottom_tab_style"
+            android:drawableTop="@drawable/ic_tab_fresh"
+            android:text="@string/home_me"
+            />
+    </RadioGroup>
+
+</LinearLayout>
