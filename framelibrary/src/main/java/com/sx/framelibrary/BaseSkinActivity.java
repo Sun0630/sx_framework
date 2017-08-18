@@ -10,7 +10,6 @@ import android.support.v4.view.LayoutInflaterFactory;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.VectorEnabledTintResources;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewParent;
@@ -54,8 +53,8 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
         //1,创建View
         // If the Factory didn't handle it, let our createView() method try
         View view = createView(parent, name, context, attrs);
-        Log.e(TAG, "BaseSkinActivity-->onCreateView: " + view);
-        Log.e(TAG, "BaseSkinActivity-->onParentView: " + parent);
+//        Log.e(TAG, "BaseSkinActivity-->onCreateView: " + view);
+//        Log.e(TAG, "BaseSkinActivity-->onParentView: " + parent);
 
         //2,解析属性  textColor,src,backageground,自定义的属性
         // 一个Activity的布局肯定对应多个SkinView
