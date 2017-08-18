@@ -19,7 +19,7 @@ import com.sx.baselibrary.ioc.ViewUtils;
 public abstract class BaseFragment extends Fragment {
 
     private View mRootView;
-    private Context mContext;
+    public Context mContext;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

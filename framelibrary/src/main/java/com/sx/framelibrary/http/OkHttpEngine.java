@@ -1,6 +1,7 @@
 package com.sx.framelibrary.http;
 
 import android.content.Context;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -36,6 +37,7 @@ public class OkHttpEngine implements IHttpEngine {
     public static final String TAG = "OkHttpEngine";
 
     private static OkHttpClient okHttpClient = new OkHttpClient();
+    private Handler mHandler = new Handler();
 
     @Override
     public void get(final boolean cache, Context context, final String url, Map<String, Object> params, final EngineCallBack callBack) {
@@ -52,12 +54,17 @@ public class OkHttpEngine implements IHttpEngine {
 
         //处理缓存,先判断需不需要缓存，然后判断有没有缓存
         if (cache) {
-            String resultJson = CacheDataUtil.getCacheResultJson(joinurl);
+            final String resultJson = CacheDataUtil.getCacheResultJson(joinurl);
             //需要缓存
             if (!TextUtils.isEmpty(resultJson)) {
                 Log.e(TAG, "get: 读到缓存");
                 //有缓存,直接回调
-                callBack.onSuccess(resultJson);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack.onSuccess(resultJson);
+                    }
+                });
             }
         }
 
@@ -66,13 +73,19 @@ public class OkHttpEngine implements IHttpEngine {
         final Request request = requestBuilder.build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                callBack.onError(e);
+            public void onFailure(Call call, final IOException e) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        callBack.onError(e);
+                    }
+                });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String resultJson = response.body().string();
+                final String resultJson = response.body().string();
                 //获取到数据之后，先和缓存数据做一个对比，判断是否需要缓存
 
                 if (cache) {
@@ -87,7 +100,13 @@ public class OkHttpEngine implements IHttpEngine {
                     }
                 }
 
-                callBack.onSuccess(resultJson);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        callBack.onSuccess(resultJson);
+                    }
+                });
                 Log.e("Get返回结果", resultJson);
 
                 //缓存数据
@@ -99,6 +118,7 @@ public class OkHttpEngine implements IHttpEngine {
             }
         });
     }
+
 
     @Override
     public void post(boolean cache, Context context, String url, Map<String, Object> params, final EngineCallBack callBack) {
@@ -115,15 +135,26 @@ public class OkHttpEngine implements IHttpEngine {
                 .newCall(request)
                 .enqueue(new Callback() {//两个回调都是在子线程中
                     @Override
-                    public void onFailure(Call call, IOException e) {
-                        callBack.onError(e);
+                    public void onFailure(Call call, final IOException e) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callBack.onError(e);
+
+                            }
+                        });
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        String result = response.body().string();
+                        final String result = response.body().string();
                         Log.d("Post返回结果", result);
-                        callBack.onSuccess(result);
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callBack.onSuccess(result);
+                            }
+                        });
                     }
                 });
     }

@@ -2,10 +2,10 @@
 仿内涵段子
 
 * 模板方法模式构建BaseActivity
-* 创建全局的异常捕捉类
+* [创建全局的异常捕捉类](https://sun0630.github.io/2017/03/25/%E6%9E%84%E5%BB%BA%E5%85%A8%E5%B1%80%E7%9A%84%E5%BC%82%E5%B8%B8%E6%8D%95%E6%8D%89%E7%B1%BB/)
 * 阿里热修复框架:AndFix
 * 自定义热修复框架
-* 使用Builder设计模式打造支持链式调用的AlertDialog
+* 使用[Builder设计模式](https://sun0630.github.io/2017/08/03/Builder(%E5%BB%BA%E9%80%A0%E8%80%85)%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/)打造支持链式调用的AlertDialog
 
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setContentView(R.layout.detail_common_dialog)
@@ -121,7 +121,7 @@
          2. 内存泄漏(不要把Activity的this交出去)
          
 * IPC进程间通信
-    * Binder源码阅读7
+    * Binder源码阅读
     * Service保活
         * 进程被杀的原因
             1. 系统内存不足，需要回收，杀掉进程

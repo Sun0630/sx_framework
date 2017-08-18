@@ -3,9 +3,7 @@ package com.sx.framelibrary.skin.support;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 
-import com.orhanobut.logger.Logger;
 import com.sx.framelibrary.skin.attr.SkinAttr;
 import com.sx.framelibrary.skin.attr.SkinType;
 
@@ -28,13 +26,13 @@ public class SkinAttrSupport {
         for (int index = 0; index < attrs.getAttributeCount(); index++) {
             String name = attrs.getAttributeName(index);
             String value = attrs.getAttributeValue(index);
-            Log.e(TAG, "attrName --> " + name + "  attrValue --> " + value);
+//            Log.e(TAG, "attrName --> " + name + "  attrValue --> " + value);
             //只获取我们需要的属性
             SkinType skinType = getSkinType(name);
             if (skinType != null) {
                 // 资源名称 --> @17170461  要把资源id转换成文字
                 String resName = getResName(context, value);
-                Logger.d("resName-->" + resName);
+//                Logger.d("resName-->" + resName);
                 if (TextUtils.isEmpty(resName)) {
                     continue;
                 }
@@ -75,7 +73,7 @@ public class SkinAttrSupport {
 
         for (SkinType type : skinTypes) {
             if (type.getResName().equals(name)) {
-                Logger.e("进来了"+type.getResName());
+//                Logger.e("进来了"+type.getResName());
                 return type;
             }
         }
