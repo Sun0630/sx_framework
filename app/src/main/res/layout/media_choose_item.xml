@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sx.essayjoke.imageselector.view.SquareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                       android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content">
+
+    <com.sx.essayjoke.imageselector.view.SquareImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <View
+        android:id="@+id/mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88000000"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/media_select_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:padding="5dp"
+        android:src="@drawable/media_choose_ic"/>
+
+    <LinearLayout
+        android:id="@+id/camera_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/album_ic_photo_camera_white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:text="拍照"
+            android:textColor="#cdcece"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+
+
+</com.sx.essayjoke.imageselector.view.SquareFrameLayout>

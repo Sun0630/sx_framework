@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_image_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ff261f1f"/>
+
+
+    <RelativeLayout
+        android:id="@+id/op_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_alignParentBottom="true"
+        android:background="#800a0909">
+
+        <TextView
+            android:id="@+id/select_preview"
+            style="@style/media_choose_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:enabled="false"
+            android:paddingLeft="20dp"
+            android:text="@string/media_choose_preview"/>
+
+        <TextView
+            android:id="@+id/select_number"
+            style="@style/media_choose_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+
+        <TextView
+            android:id="@+id/select_finish"
+            style="@style/media_choose_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:enabled="false"
+            android:onClick="selectFinish"
+            android:paddingRight="20dp"
+            android:text="@string/media_choose_ok"/>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/loading_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+</RelativeLayout>

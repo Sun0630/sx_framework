@@ -30,11 +30,14 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
         setText(R.id.title, getParams().mTitle);
         setText(R.id.right_text, getParams().mRightText);
 
-        setOnClickListener(R.id.back, getParams().mRightClickListener);
+        setOnClickListener(R.id.back, getParams().mLeftClickListener);
         setRightIcon(R.id.right_text, getParams().mRightIcon);
         //左边箭头
         setVisiable(R.id.back,getParams().mLeftIconVisiable);
+        setColor(R.id.rl_container,getParams().mColor);
+        setTextColor(R.id.title,getParams().mTextColor);
     }
+
 
 
 
@@ -124,12 +127,33 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
             return this;
         }
 
+        /**
+         * 设置背景颜色
+         * @param color
+         * @return
+         */
+        public DefaultNavigationBar.Builder setColor(int color) {
+            P.mColor = color;
+            return this;
+        }
+
+        /**
+         * 设置文字颜色
+         * @param textColor
+         * @return
+         */
+        public DefaultNavigationBar.Builder setTextColor(int textColor) {
+            P.mTextColor = textColor;
+            return this;
+        }
+
 
         public static class DefaultNavigationParams extends AbsNavigationParams {
             public String mTitle;
             public String mRightText;
             public View.OnClickListener mRightClickListener;
             public int mRightIcon;
+            public int mColor;
             public View.OnClickListener mLeftClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -137,6 +161,7 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
                 }
             };//左侧按钮点击事件写默认关闭
             public int mLeftIconVisiable = View.VISIBLE;//左侧箭头
+            public int mTextColor;//文字颜色
 
             //所有的效果都放在这里
 

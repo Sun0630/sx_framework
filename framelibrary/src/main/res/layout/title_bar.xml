@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/title_bar_style">
+                android:id="@+id/rl_container"
+                style="@style/title_bar_style">
 
     <TextView
         android:id="@+id/back"
-        style="@style/back_view" />
+        style="@style/back_view"/>
 
     <TextView
         android:id="@+id/title"
@@ -21,14 +22,14 @@
 
     <TextView
         android:id="@+id/right_text"
-        android:visibility="gone"
         style="@style/title_bar_button"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:visibility="gone"/>
 
     <!--<ImageView-->
-        <!--android:id="@+id/right_img"-->
-        <!--android:visibility="gone"-->
-        <!--style="@style/title_bar_button"-->
-        <!--android:layout_alignParentRight="true" />-->
+    <!--android:id="@+id/right_img"-->
+    <!--android:visibility="gone"-->
+    <!--style="@style/title_bar_button"-->
+    <!--android:layout_alignParentRight="true" />-->
 
 </RelativeLayout>

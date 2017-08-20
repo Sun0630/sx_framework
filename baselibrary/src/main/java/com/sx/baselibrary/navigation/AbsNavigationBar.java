@@ -61,7 +61,7 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
      */
     protected void setRightIcon(int viewId, int imgRes) {
         TextView textView = findViewById(viewId);
-        if (textView!=null){
+        if (textView != null) {
             textView.setVisibility(View.VISIBLE);
             textView.setBackgroundResource(imgRes);
         }
@@ -69,11 +69,29 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
 
     /**
      * 左侧箭头显示
+     *
      * @param viewId
      * @param visiable
      */
     protected void setVisiable(int viewId, int visiable) {
         findViewById(viewId).setVisibility(visiable);
+    }
+
+
+    protected void setColor(int viewId, int color) {
+        findViewById(viewId).setBackgroundColor(color);
+    }
+
+    /**
+     * 设置文字颜色
+     * @param viewId
+     * @param color
+     */
+    protected void setTextColor(int viewId, int color) {
+        TextView textView = findViewById(viewId);
+        if (textView != null) {
+            textView.setTextColor(color);
+        }
     }
 
     /**
@@ -98,7 +116,7 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
             mParams.mParent = (ViewGroup) rootActivity.getChildAt(0);
         }
 
-        if (mParams.mParent == null){
+        if (mParams.mParent == null) {
             return;
         }
 

@@ -9,4 +9,9 @@
     <string name="home_discovery">发现</string>
     <string name="home_fresh">新鲜</string>
     <string name="home_me">消息</string>
+
+    <string name="media_choose_ok">确定</string>
+    <string name="media_choose_only_single">不支持多选</string>
+    <string name="media_choose_preview">预览</string>
+    <string name="media_choose_hint">支持选取最短4s最长10min</string>
 </resources>
