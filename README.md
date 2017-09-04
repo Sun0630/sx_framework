@@ -1,5 +1,4 @@
 ## EssayJoke
-仿内涵段子
 
 * 模板方法模式构建BaseActivity
 * [创建全局的异常捕捉类](https://sun0630.github.io/2017/03/25/%E6%9E%84%E5%BB%BA%E5%85%A8%E5%B1%80%E7%9A%84%E5%BC%82%E5%B8%B8%E6%8D%95%E6%8D%89%E7%B1%BB/)
